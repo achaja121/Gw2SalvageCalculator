@@ -1,9 +1,13 @@
-var builder = WebApplication.CreateBuilder(args);
+using Serilog;
 
+var builder = WebApplication.CreateBuilder(args);
+Log.Logger = new LoggerConfiguration()
+    .ReadFrom.Configuration(builder.Configuration).CreateLogger();
+
+builder.Host.UseSerilog(Log.Logger);
 // Add services to the container.
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -21,6 +25,8 @@ if (app.Environment.IsDevelopment())
         option.RoutePrefix = "api/swagger";
     });
 }
+
+app.UseSerilogRequestLogging();
 
 app.UseHttpsRedirection();
 
