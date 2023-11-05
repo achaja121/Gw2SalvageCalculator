@@ -1,6 +1,7 @@
 ﻿CREATE TABLE [dbo].[Items]
 (
-	[Id] INT NOT NULL PRIMARY KEY, 
+	[Id] INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
+    [ItemId] INT NOT NULL,
     [Name] NVARCHAR(150) NOT NULL, 
     [Type] INT NOT NULL, 
     [Rarity] INT NOT NULL, 
