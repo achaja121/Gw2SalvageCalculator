@@ -1,3 +1,4 @@
+using Gw2SalvageCalculator.Api.Configuration;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -7,9 +8,7 @@ Log.Logger = new LoggerConfiguration()
 builder.Host.UseSerilog(Log.Logger);
 // Add services to the container.
 
-builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.RegisterServices();
 
 var app = builder.Build();
 // Configure the HTTP request pipeline.
