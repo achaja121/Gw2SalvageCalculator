@@ -71,4 +71,7 @@
   <ItemGroup>
     <PostDeploy Include="Script.PostDeployment.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Gw2SalvageCalculatorDB.publish.xml" />
+  </ItemGroup>
 </Project>

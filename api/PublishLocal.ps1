@@ -1,5 +1,6 @@
 $projectPath = $PSScriptRoot + '\Gw2SalvageCalculatorApi.sln'
 $publishProfile = $PSScriptRoot + '\src\Properties\PublishProfiles\FolderProfile.pubxml'
+$msBuild = "C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\MSBuild.exe"
 $steps = 3
 
 function Write-ProgressHelper {
@@ -16,7 +17,7 @@ Stop-Service -Name was,w3svc -PassThru
 
 Write-ProgressHelper -Message 'Publishing' -StepNumber (2)
 
-dotnet build $projectPath /p:DeployOnBuild=true /p:PublishProfile=$publishProfile
+& $msBuild $projectPath /p:DeployOnBuild=true /p:PublishProfile=$publishProfile
 
 Write-ProgressHelper -Message 'Staring services' -StepNumber (3)
 Start-Service -name was,w3svc -PassThru

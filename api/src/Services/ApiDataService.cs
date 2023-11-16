@@ -8,7 +8,7 @@ namespace Gw2SalvageCalculator.Api.Services
         private readonly IGuildWarsApiRepository _guildWarsApiRepository;
         private readonly ILogger _logger;
 
-        public ApiDataService(IGuildWarsApiRepository guildWarsApiRepository, ILogger logger)
+        public ApiDataService(IGuildWarsApiRepository guildWarsApiRepository, ILogger<ApiDataService> logger)
         {
             _guildWarsApiRepository = guildWarsApiRepository;
             _logger = logger;
@@ -17,13 +17,13 @@ namespace Gw2SalvageCalculator.Api.Services
         public async Task<bool> PopulateDBWithGuildWarsDataAsync()
         {
             var itemResponses = new List<ItemResponse>();
-            var itemIds = await _guildWarsApiRepository.GetAllItemIdsAsync();
-            var taskList = itemIds.Select(x => _guildWarsApiRepository.GetItemById(x.ToString())).ToList();
-            var batches = SplitList(taskList);
+            var itemIds = (await _guildWarsApiRepository.GetAllItemIdsAsync()).ToList();
+            var batches = SplitList(itemIds);
 
             foreach (var batch in batches)
             {
-                var items = await Task.WhenAll(batch);
+                var tasks = batch.Select(id => _guildWarsApiRepository.GetItemById(id.ToString()));
+                var items = await Task.WhenAll(tasks);
                 itemResponses.AddRange(items);
             }
 
@@ -32,9 +32,9 @@ namespace Gw2SalvageCalculator.Api.Services
             return true;
         }
 
-        private static IEnumerable<List<Task<ItemResponse>>> SplitList(List<Task<ItemResponse>> orginalList, int nSize = 300)
+        private static IEnumerable<List<int>> SplitList(List<int> orginalList, int nSize = 300)
         {
-            var batches = new List<List<Task<ItemResponse>>>();
+            var batches = new List<List<int>>();
 
             for (int i = 0; i < orginalList.Count; i += nSize)
             {

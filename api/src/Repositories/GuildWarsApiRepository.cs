@@ -10,7 +10,7 @@ namespace Gw2SalvageCalculator.Api.Repositories
 
         private readonly ILogger _logger;
 
-        public GuildWarsApiRepository(IHttpClientFactory httpClientFactory, ILogger logger)
+        public GuildWarsApiRepository(IHttpClientFactory httpClientFactory, ILogger<GuildWarsApiRepository> logger)
             : base(httpClientFactory, logger)
         {
             _logger = logger;
