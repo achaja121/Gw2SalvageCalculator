@@ -1,4 +1,4 @@
-$projectPath = $PSScriptRoot + '\src\Gw2SalvageCalculatorApi.csproj'
+$projectPath = $PSScriptRoot + '\Gw2SalvageCalculatorApi.sln'
 $publishProfile = $PSScriptRoot + '\src\Properties\PublishProfiles\FolderProfile.pubxml'
 $steps = 3
 

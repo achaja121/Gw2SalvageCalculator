@@ -68,4 +68,7 @@
     <Build Include="dbo\StoredProcedures\spItems_GetById.sql" />
     <Build Include="dbo\StoredProcedures\spItems_Insert.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <PostDeploy Include="Script.PostDeployment.sql" />
+  </ItemGroup>
 </Project>
